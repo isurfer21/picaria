@@ -1,0 +1,219 @@
+/* Modern, engaging UI with smooth animations and professional design */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+    color: #333;
+}
+
+h1 {
+    font-size: 3em;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+}
+
+h4 {
+    margin-bottom: 20px;
+    color: #d7d7d7;
+}
+
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 110px);
+    grid-template-rows: repeat(3, 110px);
+    gap: 8px;
+    padding: 10px;
+    background: linear-gradient(145deg, #2c3e50, #34495e);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.cell {
+    background: linear-gradient(145deg, #ecf0f1, #bdc3c7);
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3.5em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.cell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cell:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+}
+
+.cell:hover::before {
+    opacity: 1;
+}
+
+.cell:active {
+    transform: scale(0.98);
+}
+
+.cell.X {
+    color: #e74c3c;
+    text-shadow: 2px 2px 4px rgba(231, 76, 60, 0.3);
+}
+
+.cell.X::after {
+    /* content: '✕'; */
+    animation: slideIn 0.3s ease;
+}
+
+.cell.O {
+    color: #3498db;
+    text-shadow: 2px 2px 4px rgba(52, 152, 219, 0.3);
+}
+
+.cell.O::after {
+    /* content: '○'; */
+    animation: slideIn 0.3s ease;
+}
+
+.cell.winner {
+    background: linear-gradient(145deg, #d4edda, #c3e6cb) !important;
+    box-shadow: 0 0 0 0 rgba(212, 237, 218, 0.7);
+    animation: winPulse 1s infinite;
+}
+
+@keyframes winPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(212, 237, 218, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 15px rgba(212, 237, 218, 0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#status-message {
+    margin-top: 25px;
+    font-size: 1.5em;
+    min-height: 2em;
+    padding: 15px 30px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+}
+
+#status-message.win {
+    color: #27ae60;
+    animation: celebrate 0.5s ease;
+}
+
+#status-message.draw {
+    color: #f39c12;
+}
+
+@keyframes celebrate {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+#reset-button {
+    margin-top: 30px;
+    padding: 15px 40px;
+    font-size: 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(145deg, #2ecc71, #27ae60);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+    letter-spacing: 1px;
+}
+
+#reset-button:hover {
+    background: linear-gradient(145deg, #27ae60, #229954);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.5);
+}
+
+#reset-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(46, 204, 113, 0.3);
+}
+
+#reset-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Responsive design */
+@media (max-width: 400px) {
+    h1 {
+        font-size: 2.2em;
+    }
+
+    #game-board {
+        grid-template-columns: repeat(3, 90px);
+        grid-template-rows: repeat(3, 90px);
+    }
+
+    .cell {
+        font-size: 2.8em;
+    }
+
+    #status-message {
+        font-size: 1.2em;
+        padding: 12px 25px;
+    }
+
+    #reset-button {
+        padding: 12px 30px;
+        font-size: 1em;
+    }
+}
