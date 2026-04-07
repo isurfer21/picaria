@@ -29,6 +29,34 @@ h4 {
     color: #d7d7d7;
 }
 
+/* --- Navigation Links Styling --- */
+.nav-links {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ecf0f1; /* Light color similar to the old h4 */
+    font-size: 1.1em;
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.5);
+}
+/* --- End Navigation Styling --- */
+
 #game-board {
     display: grid;
     grid-template-columns: repeat(3, 110px);
