@@ -14,9 +14,44 @@
         <a href="#about">About</a>
         <a href="#help">Help</a>
     </nav>
-    <div id="game-board"></div>
-    <div id="status-message"></div>
-    <button id="reset-button">Reset Game</button>
+
+    <!-- Main Game Area -->
+    <div id="game-container">
+        <div id="game-board"></div>
+        <div class="game-control">
+            <div id="status-message"></div>
+            <button id="reset-button">Reset Game</button>
+        </div>
+    </div>
+
+    <!-- --- Modal Structures --- -->
+    <!-- About Modal -->
+    <div id="about-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>About Picaria</h2>
+            <p><strong>Game Name:</strong> Picaria</p>
+            <p><strong>Developed By:</strong> Professional Software Architect (via prompt assistance)</p>
+            <p><strong>Copyright:</strong> &copy; 2026. All rights reserved.</p>
+            <p><strong>License:</strong> MIT License. This project is free to use, copy, modify, and distribute.</p>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Help & Instructions</h2>
+            <p><strong>Objective:</strong> Be the first player to get three of your marks (X or O) in a straight line—horizontally, vertically, or diagonally.</p>
+            <h3>Gameplay Flow</h3>
+            <ol>
+                <li><strong>Player X (You):</strong> Starts the game and makes the first move.</li>
+                <li><strong>Computer (Player O):</strong> After your move, the computer AI will analyze the board and make the best defensive or offensive move.</li>
+                <li><strong>Winning Condition:</strong> The game ends immediately when a winning line is formed or when all cells are filled (a Draw).</li>
+            </ol>
+        </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
