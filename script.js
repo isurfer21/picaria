@@ -200,4 +200,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize status message
     statusDisplay.innerHTML = `X's turn`;
+
+    // --- Modal and Navigation Logic (High Priority) ---
+
+    // 1. Close modal via close buttons
+    document.querySelectorAll('.close-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const modal = button.closest('.modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+
+    // 2. Close modal via background overlay click
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            // Check if the click landed on the very top background layer (assuming it's the background overlay)
+            if (e.target.classList.contains('modal') && e.target.id !== 'main-modal') { 
+                modal.style.display = 'none';
+            }
+        });
+    });
+
+    // 3. Handle clicks on navigation links
+    document.querySelectorAll('.nav-links a[href^="#"], .nav-links a[href^=""] unknown').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = e.target.getAttribute('href');
+            if (!href) return;
+
+            // Assuming href="#modal-id" format, targetId is 'modal-id'
+            const targetId = href.substring(1); 
+            const targetModal = document.getElementById(targetId);
+            const allModals = document.querySelectorAll('.modal');
+
+            // Hide all modals first
+            allModals.forEach(modal => {
+                modal.style.display = 'none'; 
+            });
+
+            // Show the target modal
+            if (targetModal) {
+                targetModal.style.display = 'block'; 
+                // Optional: Add logic to trap focus here if needed for accessibility.
+            }
+        });
+    });
+
 });
