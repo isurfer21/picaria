@@ -40,6 +40,47 @@
     backdrop-filter: blur(5px); /* Added backdrop blur for a modern feel */
 }
 
+/* --- About Modal Specific Enhancements --- */
+.modal-content h2 {
+    color: #2c3e50;
+    font-size: 2.2em;
+    margin-bottom: 20px !important; /* Overriding potential inherited margin */
+}
+
+.about-details {
+    padding: 20px 0;
+}
+
+.description-paragraph {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    padding-left: 10px;
+    border-left: 4px solid #3498db; /* Accent color */
+}
+
+.meta-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.meta-info p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.meta-info strong {
+    color: #555;
+    min-width: 120px; /* Helps align the values vertically */
+    display: inline-block;
+    font-weight: 600;
+}
+
+/* --- End About Modal Styling --- */
+
 .modal-content {
     background-color: #ffffff;
     margin: auto;
@@ -65,7 +106,7 @@
 .close-button:focus {
     color: #e74c3c;
     text-decoration: none;
-    font-size: 40px;
+    /* font-size: 40px; */
 }
 
 /* --- Section Styling (Fallback/Alternative) --- */
