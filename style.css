@@ -149,16 +149,32 @@ body {
     color: #333;
 }
 
-h1 {
+.app-title h1 {
     font-size: 3em;
     color: #fff;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     letter-spacing: 2px;
 }
 
-h4 {
+.app-title h4 {
     margin-bottom: 20px;
     color: #d7d7d7;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+section h1,h2,h3 {
+    margin-bottom: 20px;
+}
+
+section ol,ul {
+    padding-inline-start: 40px;
+}
+
+section li {
+    margin-bottom: 10px;
 }
 
 /* --- Navigation Links Styling --- */
