@@ -109,25 +109,7 @@
     /* font-size: 40px; */
 }
 
-/* --- Section Styling (Fallback/Alternative) --- */
-.content-box {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    margin: 20px 0;
-    max-width: 800px;
-    width: 100%;
-    opacity: 0; /* Start hidden for JS transition */
-    transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
 
-.content-box.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-/* --- End Section Styling --- */
 
 /* Add new keyframe for fadeIn */
 @keyframes fadeIn {
