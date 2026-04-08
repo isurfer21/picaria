@@ -133,7 +133,7 @@
         text-align: center;
     }
 
-    #game-board {
+    .game-board {
         grid-template-columns: repeat(3, 90px);
         grid-template-rows: repeat(3, 90px);
     }
@@ -228,7 +228,7 @@ section li {
 }
 /* --- End Navigation Styling --- */
 
-#game-board {
+.game-board {
     display: grid;
     grid-template-columns: repeat(3, 110px);
     grid-template-rows: repeat(3, 110px);
@@ -404,7 +404,7 @@ section li {
         font-size: 2.2em;
     }
 
-    #game-board {
+    .game-board {
         grid-template-columns: repeat(3, 90px);
         grid-template-rows: repeat(3, 90px);
     }

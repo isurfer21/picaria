@@ -17,22 +17,21 @@ export class UIManager {
         
         // Securely rebuilding the board structure with updated event handling wiring
         gameBoardContainer.innerHTML = `
-            <h2>Game Board</h2>
-            <div id="board" style="display: grid; grid-template-columns: repeat(3, 100px); gap: 5px; margin-bottom: 20px;">
-                <div id="cell-0"></div>
-                <div id="cell-1"></div>
-                <div id="cell-2"></div>
-                <div id="cell-3"></div>
-                <div id="cell-4"></div>
-                <div id="cell-5"></div>
-                <div id="cell-6"></div>
-                <div id="cell-7"></div>
-                <div id="cell-8"></div>
-            </divs>
-            <div id="status-message" style="padding: 10px; border: 1px solid #ccc;">
-                Current Player: X
-            </divs>
-            <button id="reset-button">Reset Game</button>
+            <div id="board" class="game-board">
+                <div id="cell-0" class="cell"></div>
+                <div id="cell-1" class="cell"></div>
+                <div id="cell-2" class="cell"></div>
+                <div id="cell-3" class="cell"></div>
+                <div id="cell-4" class="cell"></div>
+                <div id="cell-5" class="cell"></div>
+                <div id="cell-6" class="cell"></div>
+                <div id="cell-7" class="cell"></div>
+                <div id="cell-8" class="cell"></div>
+            </div>
+            <div class="game-control">
+                <div id="status-message">Current Player: X</div>
+                <button id="reset-button">Reset Game</button>
+            </div>
         `;
         
         // Attach the event listener using the provided callback
