@@ -225,28 +225,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 3. Handle clicks on navigation links
-    document.querySelectorAll('.nav-links a[href^="#"], .nav-links a[href^=""] unknown').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const href = e.target.getAttribute('href');
-            if (!href) return;
+    document.querySelectorAll('.nav-links a[href^="#"]')
+        .forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = e.target.getAttribute('href');
+                if (!href) return;
 
-            // Assuming href="#modal-id" format, targetId is 'modal-id'
-            const targetId = href.substring(1); 
-            const targetModal = document.getElementById(targetId);
-            const allModals = document.querySelectorAll('.modal');
+                // Assuming href="#modal-id" format, targetId is 'modal-id'
+                const targetId = href.substring(1); 
+                const targetModal = document.getElementById(`${targetId}-modal`);
+                const allModals = document.querySelectorAll('.modal');
 
-            // Hide all modals first
-            allModals.forEach(modal => {
-                modal.style.display = 'none'; 
+                // Hide all modals first
+                allModals.forEach(modal => {
+                    modal.style.display = 'none'; 
+                });
+
+                // Show the target modal
+                if (targetModal) {
+                    targetModal.style.display = 'block'; 
+                    // Optional: Add logic to trap focus here if needed for accessibility.
+                }
             });
-
-            // Show the target modal
-            if (targetModal) {
-                targetModal.style.display = 'block'; 
-                // Optional: Add logic to trap focus here if needed for accessibility.
-            }
         });
-    });
 
 });
