@@ -2,9 +2,86 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusDisplay = document.getElementById('status-message');
     const resetButton = document.getElementById('reset-button');
 
-    let gameActive = true;
-    let currentPlayer = 'X';
-    let gameState = ["", "", "", "", "", "", "", "", ""];
+// --- STATE MANAGEMENT MODULE (State Store) ---
+const initializeGameState = () => ({
+    gameActive: true,
+    currentPlayer: 'X',
+    gameState: ["", "", "", "", "", "", "", "", ""]
+});
+let state = initializeGameState();
+const observers = [];
+
+// Function to notify all modules subscribed to state changes
+const notifyObservers = () => {
+    observers.forEach(callback => callback(state));
+};
+
+// Public API to manage the game state
+const StateManager = {
+    getState: () => ({ ...state }), // Return a copy to prevent external mutation
+    
+    // Method called on initialization or reset
+    resetGame: () => {
+        state = initializeGameState();
+        notifyObservers();
+        return state;
+    },
+
+    // Method called when a player makes a move
+    makeMove: (index, player) => {
+        if (!state.gameActive || gameState.gameState[index] !== "") {
+            console.warn("Cannot make move: Game inactive or cell already taken.");
+            return false;
+        }
+        
+        // 1. Update state
+        const newState = { ...state, gameState: [...state.gameState] };
+        newState.gameState[index] = player;
+        
+        // 2. Check outcomes (This encapsulates logic that was previously global)
+        const winner = checkWin(index, player);
+        if (winner) {
+             return { success: true, newState: newState, outcome: 'WIN', winner: winner };
+        }
+
+        const draw = checkDraw();
+        if (draw) {
+             return { success: true, newState: newState, outcome: 'DRAW' };
+        }
+        
+        // 3. Switch turn
+        const nextPlayer = player === 'X' ? 'O' : 'X';
+        let nextState = { ...newState, currentPlayer: nextPlayer };
+
+        // 4. Finalize state update
+        state = nextState;
+        notifyObservers();
+        return { success: true, newState: state, outcome: 'CONTINUE', nextPlayer: nextPlayer };
+    },
+    
+    // Placeholder for AI triggering (will be hooked up later)
+    processAIMove: (availableCells) => {
+        // This will call the game engine logic later
+        console.log("AI move logic placeholder called.");
+        return null;
+    },
+
+    // Subscription mechanism for View/Orchestrator
+    subscribe: (callback) => {
+        observers.push(callback);
+        // Return an unsubscribe function for cleanup
+        return () => {
+            const index = observers.indexOf(callback);
+            if (index !== -1) observers.splice(index, 1);
+        };
+    }
+};
+
+// Expose the current state getter for initial setup only
+StateManager.init = () => {
+    state = initializeGameState();
+    notifyObservers();
+};
 
     const winningConditions = [
         [0, 1, 2],
