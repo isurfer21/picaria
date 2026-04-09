@@ -10,10 +10,12 @@
       },
       "models": {
         "qwen2.5-coder:latest": {
-          "name": "Qwen2.5 Coder"
+          "name": "Qwen2.5 Coder",
+          "maxTokens": 8192
         },
         "gemma4:latest": {
-          "name": "Gemma 4"
+          "name": "Gemma 4",
+          "maxTokens": 16384
         },
         "qwen3.5:latest": {
           "name": "Qwen 3.5 (Agentic)",
