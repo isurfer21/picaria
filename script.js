@@ -78,110 +78,122 @@ const Utils = {
 // -----------------------------------------------------------------------------
 
 /**
- * @class UIElement
- * @extends HTMLElement
- * @description Base UI element for component-based UI architecture
+ * UIElement factory - returns plain JavaScript object
+ * This avoids extending HTMLElement to prevent browser compatibility issues
  */
-class UIElement extends HTMLElement {
-    constructor(container) {
-        super();
-        this.container = container;
-        this.isVisible = true;
-    }
+function createUIElement(container) {
+    return {
+        element: null, // DOM element managed by subclasses
+        container: container,
+        isVisible: true,
 
-    render() {
-        // Override in subclasses
-    }
+        render(renderFn) {
+            this.element = renderFn(this);
+            this.container.appendChild(this.element);
+        },
 
-    hide() {
-        this.isVisible = false;
-        this.style.display = 'none';
-    }
+        hide() {
+            this.isVisible = false;
+            if (this.element) {
+                this.element.style.display = 'none';
+            }
+        },
 
-    show() {
-        this.isVisible = true;
-        this.style.display = 'flex';
-    }
+        show() {
+            this.isVisible = true;
+            if (this.element) {
+                this.element.style.display = 'flex';
+            }
+        }
+    };
 }
 
 /**
  * @class StatusDisplay
  * @description Display component for game status messages
  */
-class StatusDisplay extends UIElement {
-    constructor(container) {
-        super(container);
-        this.init();
-    }
+const StatusDisplay = function (container) {
+    let element = null;
 
-    init() {
-        this.render.call(this);
-    }
+    const instance = createUIElement(container);
 
-    render() {
-        const element = document.createElement('div');
+    instance.init = function () {
+        element = document.createElement('div');
         element.id = 'status-display';
-        element.className = 'status-display';
-        this.render(element);
-    }
+        instance.render(element);
+        container.appendChild(element);
+    };
 
-    /**
-     * @override
-     * @param {string} message - Status message to display
-     */
-    render(element) {
-        element.textContent = `Player ${Utils.PLAYER_X}'s turn`;
-        this.container.appendChild(element);
-    }
+    instance.render = function (el) {
+        if (!el) return;
+        el.textContent = `Player ${Utils.PLAYER_X}'s turn`;
+    };
 
-    update(message) {
-        this.childNodes[0].textContent = message;
-    }
+    instance.update = function (message) {
+        if (element && element.childNodes[0]) {
+            element.childNodes[0].textContent = message;
+        }
+    };
 
-    clear() {
-        this.childNodes && (this.childNodes[0].textContent = '');
-    }
-}
+    instance.clear = function () {
+        if (element && element.childNodes[0]) {
+            element.childNodes[0].textContent = '';
+        }
+    };
+
+    // Initialize on creation
+    instance.init();
+
+    return instance;
+};
 
 /**
  * @class ButtonElement
  * @description Button component with click handlers
  */
-class ButtonElement extends UIElement {
-    constructor(container, label, onClick, onRender) {
-        super(container);
-        this.label = label;
-        this.onClick = onClick;
-        this.onRender = onRender || ((btn) => {
-            btn.textContent = label;
-            btn.className = 'button';
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onClick();
-            });
+const ButtonElement = function (container, label, onClick, onRender) {
+    let element = null;
+
+    const instance = createUIElement(container);
+
+    instance.init = function () {
+        element = document.createElement('button');
+        instance.render(element);
+        container.appendChild(element);
+    };
+
+    instance.render = function (el) {
+        if (!el) return;
+        el.id = this.label.toLowerCase().replace(/\s+/g, '-');
+        el.textContent = label;
+        el.className = 'button';
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (this.onClick) {
+                this.onClick();
+            }
         });
-        this.init();
-    }
+    };
 
-    init() {
-        this.render.call(this);
-    }
+    instance.onClick = (callback) => {
+        if (element) {
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (callback) {
+                    callback();
+                }
+            });
+        }
+    };
 
-    /**
-     * @override
-     * @param {HTMLElement} element
-     */
-    render(element) {
-        element.id = this.label.toLowerCase().replace(/\s+/g, '-');
-        element.addEventListener('click', this.onClick);
-        this.container.appendChild(element);
-    }
+    instance.label = label;
 
-    onClickHandler() {
-        this.onClick();
-    }
-}
+    // Initialize on creation
+    instance.init();
+
+    return instance;
+};
 
 // -----------------------------------------------------------------------------
 // GAME LOGIC LAYER - CORE CLASSES
@@ -275,7 +287,7 @@ class Board {
      */
     checkWin(index, checkWin = true) {
         const currentPlayer = this.cells[index].get();
-        
+
         // Check if current player won with this move
         for (const condition of Utils.WINNING_CONDITIONS) {
             const [a, b, c] = condition;
@@ -287,12 +299,12 @@ class Board {
                 return currentPlayer;
             }
         }
-        
+
         // Check for draw
         if (!this.getAll().includes(Utils.EMPTY)) {
             return 'DRAW';
         }
-        
+
         return null;
     }
 
