@@ -315,13 +315,11 @@ class Board {
 
     static fromArray(array) {
         const board = new Board();
-        board.cells = array.map(val => ({
-            ...new CellState(),
-            set() {
-                if (val === Utils.EMPTY) this.value = Utils.EMPTY;
-                else this.value = val;
-            }.bind(this))
-        }));
+        board.cells = array.map((val, index) => {
+            const cell = new CellState();
+            cell.value = val;  // Set initial value directly
+            return cell;
+        });
         return board;
     }
 }
@@ -778,6 +776,72 @@ class GameLoopController {
      */
     stop() {
         this.isRunning = false;
+    }
+}
+
+/**
+ * @class BoardCell
+ * @description Component class for individual board cells
+ */
+class BoardCell {
+    constructor(gameController, element) {
+        this.gameController = gameController;
+        this.element = element;
+        this.init();
+    }
+
+    init() {
+        // Click handler for the cell
+        const handleClick = () => {
+            const index = parseInt(this.element.getAttribute('data-index'));
+            this.gameController.handleCellClick(index);
+        };
+
+        this.element.addEventListener('click', handleClick);
+    }
+
+    /**
+     * Handle click and delegate to game controller
+     */
+    onTargetClick(handler) {
+        this.element.addEventListener('click', handler);
+        return () => this.element.removeEventListener('click', handler);
+    }
+
+    /**
+     * Update cell display
+     */
+    update(value) {
+        this.element.textContent = value || '';
+        this.element.className = 'cell';
+    }
+
+    show() {
+        this.element.style.display = 'flex';
+        this.element.style.visibility = 'visible';
+    }
+
+    hide() {
+        this.element.style.display = 'none';
+        this.element.style.visibility = 'hidden';
+    }
+
+    addClass(...names) {
+        this.element.classList.add(...names);
+    }
+
+    removeClass(...names) {
+        this.element.classList.remove(...names);
+    }
+}
+
+/**
+ * @class Board
+ */
+class Board {
+    constructor(size = 9) {
+        this.size = size;
+        this.reset();
     }
 }
 
