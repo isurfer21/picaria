@@ -835,16 +835,6 @@ class BoardCell {
     }
 }
 
-/**
- * @class Board
- */
-class Board {
-    constructor(size = 9) {
-        this.size = size;
-        this.reset();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // MAIN CONTROLLER (Ties everything together)
 // -----------------------------------------------------------------------------
