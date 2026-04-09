@@ -147,7 +147,7 @@
         padding: 12px 25px;
     }
     
-    #reset-button {
+    .button {
         padding: 12px 30px;
         font-size: 1em;
     }
@@ -366,7 +366,7 @@ section li {
     }
 }
 
-#reset-button {
+.button {
     margin-top: 30px;
     padding: 15px 40px;
     font-size: 1.2em;
@@ -381,18 +381,18 @@ section li {
     letter-spacing: 1px;
 }
 
-#reset-button:hover {
+.button:hover {
     background: linear-gradient(145deg, #27ae60, #229954);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(46, 204, 113, 0.5);
 }
 
-#reset-button:active {
+.button:active {
     transform: translateY(0);
     box-shadow: 0 2px 10px rgba(46, 204, 113, 0.3);
 }
 
-#reset-button:disabled {
+.button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
@@ -418,7 +418,7 @@ section li {
         padding: 12px 25px;
     }
 
-    #reset-button {
+    .button {
         padding: 12px 30px;
         font-size: 1em;
     }

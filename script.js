@@ -888,7 +888,7 @@ class GameController {
             cell.id = `cell-${i}`;
             cell.className = 'cell';
             cell.setAttribute('data-index', i);
-            gameBoard.appendChild(cell);
+            this.gameBoard.appendChild(cell);
             
             // Create board cell component
             this.cells.push(new BoardCell(this, cell));
@@ -909,19 +909,15 @@ class GameController {
         });
 
         // Attach click handlers to cells
-        this.cells.forEach(cell => {
-            cell.onTargetClick((cell) => {
+        this.cells.forEach((cellComponent) => {
+            cellComponent.onTargetClick((cell) => {
                 const index = parseInt(cell.element.getAttribute('data-index'));
                 this.handleCellClick(index);
             });
         });
 
-        // Attach reset button handler
-        this.resetButton.onClick(() => {
-            this.playerManager.reset();
-            this.renderBoard();
-            this.updateStatus(`Player ${this.turnManager.getCurrentPlayer()}'s turn`);
-        });
+// Attach reset button handler
+// Using event listener, no need to call on() since we already added in ButtonElement.render
 
         // Initialize status display
         this.updateStatus(`Player ${Utils.PLAYER_X}'s turn`);
